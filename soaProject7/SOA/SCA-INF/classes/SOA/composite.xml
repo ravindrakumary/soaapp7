@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Generated from Oracle SOA Archetype version 12.1.3.0.0  -->
+<composite name="soaProject7"
+           revision="1.0"
+           label="2013-10-14_14-36-17_928"
+           mode="active"
+           state="on"
+           xmlns="http://xmlns.oracle.com/sca/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+           xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
+           xmlns:ui="http://xmlns.oracle.com/soa/designer/"
+           xmlns:sca-ext="http://xmlns.oracle.com/sca/1.0-ext">
+  <import namespace="http://xmlns.oracle.com/soaApp7/soaProject7/BPELaddingprocess"
+          location="WSDLs/BPELaddingprocess.wsdl" importType="wsdl"/>
+  <service name="bpeladdingprocess_client_ep" ui:wsdlLocation="WSDLs/BPELaddingprocess.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/soaApp7/soaProject7/BPELaddingprocess#wsdl.interface(BPELaddingprocess)"
+                    callbackInterface="http://xmlns.oracle.com/soaApp7/soaProject7/BPELaddingprocess#wsdl.interface(BPELaddingprocessCallback)"/>
+    <binding.ws port="http://xmlns.oracle.com/soaApp7/soaProject7/BPELaddingprocess#wsdl.endpoint(bpeladdingprocess_client_ep/BPELaddingprocess_pt)"/>
+    <callback>
+      <binding.ws port="http://xmlns.oracle.com/soaApp7/soaProject7/BPELaddingprocess#wsdl.endpoint(bpeladdingprocess_client_ep/BPELaddingprocessCallback_pt)"/>
+    </callback>
+  </service>
+  <property name="productVersion" type="xs:string" many="false">12.1.3.0.0</property>
+  <component name="BPELaddingprocess" version="2.0">
+    <implementation.bpel src="BPEL/BPELaddingprocess.bpel"/>
+    <componentType>
+      <service name="bpeladdingprocess_client" ui:wsdlLocation="WSDLs/BPELaddingprocess.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/soaApp7/soaProject7/BPELaddingprocess#wsdl.interface(BPELaddingprocess)"
+                        callbackInterface="http://xmlns.oracle.com/soaApp7/soaProject7/BPELaddingprocess#wsdl.interface(BPELaddingprocessCallback)"/>
+      </service>
+    </componentType>
+    <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+  </component>
+  <wire>
+    <source.uri>bpeladdingprocess_client_ep</source.uri>
+    <target.uri>BPELaddingprocess/bpeladdingprocess_client</target.uri>
+  </wire>
+</composite>

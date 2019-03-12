@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="BPELaddingprocess"
+             targetNamespace="http://xmlns.oracle.com/soaApp7/soaProject7/BPELaddingprocess"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/soaApp7/soaProject7/BPELaddingprocess"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	TYPE DEFINITION - List of services participating in this BPEL process
+	The default output of the BPEL designer uses strings as input and 
+	output to the BPEL Process. But you can define or import any XML 
+	Schema type and use them as part of the message types.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://xmlns.oracle.com/soaApp7/soaProject7/BPELaddingprocess" schemaLocation="../Schemas/BPELaddingprocess.xsd" />
+		</schema>
+	</wsdl:types>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	MESSAGE TYPE DEFINITION - Definition of the message types used as 
+	part of the port type defintions
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->      
+	<wsdl:message name="BPELaddingprocessRequestMessage">
+		<wsdl:part name="payload" element="client:process"/>
+	</wsdl:message>
+
+	<wsdl:message name="BPELaddingprocessResponseMessage">
+		<wsdl:part name="payload" element="client:processResponse"/>
+	</wsdl:message>
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	PORT TYPE DEFINITION - A port type groups a set of operations into
+	a logical service unit.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- portType implemented by the BPELaddingprocess BPEL process -->
+	<wsdl:portType name="BPELaddingprocess">
+		<wsdl:operation name="process">
+			<wsdl:input message="client:BPELaddingprocessRequestMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- portType implemented by the requester of BPELaddingprocess BPEL process
+	for asynchronous callback purposes
+	-->
+	<wsdl:portType name="BPELaddingprocessCallback">
+		<wsdl:operation name="processResponse">
+			<wsdl:input message="client:BPELaddingprocessResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	PARTNER LINK TYPE DEFINITION
+	the BPELaddingprocess partnerLinkType binds the provider and
+	requester portType into an asynchronous conversation.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<plnk:partnerLinkType name="BPELaddingprocess">
+		<plnk:role name="BPELaddingprocessProvider" portType="client:BPELaddingprocess"/>
+		<plnk:role name="BPELaddingprocessRequester" portType="client:BPELaddingprocessCallback"/>
+	</plnk:partnerLinkType>
+</wsdl:definitions>
